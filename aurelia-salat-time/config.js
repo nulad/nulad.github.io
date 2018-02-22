@@ -239,19 +239,6 @@ System.config({
       "indexof": "npm:indexof@0.0.1"
     }
   },
-  depCache: {
-    "main.js": [
-      "bootstrap"
-    ],
-    "praytime.js": [
-      "aurelia-framework",
-      "aurelia-fetch-client",
-      "min-url",
-      "moment",
-      "./geo-service",
-      "./config/salatConfig"
-    ]
-  },
   bundles: {
     "app-build.js": [
       "app.html!github:systemjs/plugin-text@0.0.8.js",
@@ -375,6 +362,19 @@ System.config({
       "npm:min-util@3.0.0/src/util.js",
       "npm:moment@2.20.1.js",
       "npm:moment@2.20.1/moment.js"
+    ]
+  },
+  depCache: {
+    "main.js": [
+      "bootstrap"
+    ],
+    "praytime.js": [
+      "aurelia-framework",
+      "aurelia-fetch-client",
+      "min-url",
+      "moment",
+      "./geo-service",
+      "./config/salatConfig"
     ]
   }
 });
