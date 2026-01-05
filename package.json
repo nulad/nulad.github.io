@@ -23,7 +23,10 @@
     "rehype-stringify": "^10.0.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "shiki": "^3.20.0"
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "shiki": "^3.20.0",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
