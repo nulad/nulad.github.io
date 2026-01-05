@@ -23,17 +23,19 @@ export default function MarkdownContent({ content, className = '' }) {
 
   const htmlWithCheckboxState = html.replace(
     /<input([^>]*?)type=("|')checkbox\2([^>]*?)>/gi,
-    (match) => {
+    (match, before, quote, after) => {
       const hasChecked = /\schecked(\s|=|>)/i.test(match);
       if (!hasChecked) {
         return match;
       }
 
-      if (/\sdata-checked(\s|=|>)/i.test(match)) {
+      // Ensure checked attribute is present and properly formatted
+      if (/\schecked=/i.test(match)) {
         return match;
       }
 
-      return match.replace(/>\s*$/i, ' data-checked="true">');
+      // Add checked attribute before closing >
+      return match.replace(/(\s*|\/?)>/, ' checked>');
     }
   );
 
@@ -84,7 +86,7 @@ export default function MarkdownContent({ content, className = '' }) {
     if (containerRef.current) {
       const checkboxes = containerRef.current.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach((input) => {
-        if (input.getAttribute('data-checked') === 'true' || input.hasAttribute('checked')) {
+        if (input.hasAttribute('checked')) {
           input.checked = true;
         }
 

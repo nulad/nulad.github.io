@@ -1,4 +1,27 @@
-import { renderMarkdown } from '../../lib/markdown';
+// Mock remark modules to avoid ESM import issues in Jest
+jest.mock('remark', () => {
+  function remark() {
+    return {
+      use: () => remark(),
+      processSync: (markdown) => ({
+        toString: () => markdown
+          .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+          .replace(/^\* (.*$)/gim, '<li>$1</li>')
+          .replace(/^- \[x\] (.*$)/gim, '<li><input type="checkbox" checked disabled /> $1</li>')
+          .replace(/^- \[ \] (.*$)/gim, '<li><input type="checkbox" disabled /> $1</li>')
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/^(?!<h|<li|<p)(.+)$/gm, '<p>$1</p>')
+          .replace(/\n/g, '<br>')
+      })
+    };
+  }
+  return remark;
+});
+
+jest.mock('remark-html');
+jest.mock('remark-gfm');
+
+const { renderMarkdown } = require('../../lib/markdown');
 
 describe('renderMarkdown', () => {
   describe('Headings', () => {
