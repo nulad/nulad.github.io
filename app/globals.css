@@ -1,3 +1,263 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Brutalist Design System for nulad.github.io
+ * Monospace font stack, black on white, heavy borders
+ * No shadows, transitions, or animations
+ */
+
+/* CSS Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Brutalist Typography & Colors */
+:root {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --border-heavy: 3px solid var(--color-black);
+  --border-medium: 2px solid var(--color-black);
+  --border-light: 1px solid var(--color-black);
+}
+
+html {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+/* Typography Scale */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  border-top: var(--border-heavy);
+  border-bottom: var(--border-heavy);
+  padding: 0.5rem 0;
+  margin: 1rem 0;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4, h5, h6 {
+  font-size: 1.125rem;
+}
+
+p {
+  margin: 0.75rem 0;
+}
+
+/* Links */
+a {
+  color: var(--color-black);
+  text-decoration: underline;
+  border: none;
+  transition: none;
+}
+
+a:hover {
+  color: var(--color-black);
+  text-decoration: underline;
+}
+
+/* Code Blocks */
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  background-color: var(--color-white);
+  border: var(--border-light);
+  padding: 0.125rem 0.25rem;
+}
+
+pre {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  background-color: var(--color-white);
+  border: var(--border-medium);
+  padding: 1rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0.75rem 0;
+  padding-left: 2rem;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: var(--border-heavy);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: normal;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+th, td {
+  border: var(--border-light);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+th {
+  border-top: var(--border-medium);
+  border-bottom: var(--border-medium);
+  font-weight: bold;
+}
+
+/* Horizontal Rule */
+hr {
+  border: none;
+  border-top: var(--border-heavy);
+  margin: 2rem 0;
+}
+
+/* Form Elements (minimal styling) */
+input, textarea, select, button {
+  border: var(--border-medium);
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 0.5rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: var(--color-white);
+}
+
+/* Layout Container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Grid Layout Helper */
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Utility Classes */
+.border-heavy {
+  border: var(--border-heavy);
+}
+
+.border-medium {
+  border: var(--border-medium);
+}
+
+.border-light {
+  border: var(--border-light);
+}
+
+.border-top-heavy {
+  border-top: var(--border-heavy);
+}
+
+.border-bottom-heavy {
+  border-bottom: var(--border-heavy);
+}
+
+.border-left-heavy {
+  border-left: var(--border-heavy);
+}
+
+.border-right-heavy {
+  border-right: var(--border-heavy);
+}
+
+/* No transitions, animations, or shadows */
+* {
+  transition: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
