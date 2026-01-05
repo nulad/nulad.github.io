@@ -159,6 +159,12 @@ Uses 0.25rem (4px) as the base unit:
 }
 ```
 
+### Token Naming Approach
+
+- **Spacing scale**: `--space-*` (unit: `0.25rem` / 4px)
+- **Layout sizing**: `--container-*` for max-widths and `--*-padding` / `--*-gap` for layout spacing
+- **Baseline components**: `--border-width-*`, `--radius-*`, and per-element tokens like `--code-block-padding`, `--hr-thickness`
+
 ## Component Guidelines
 
 ### Headings
@@ -177,16 +183,37 @@ Uses 0.25rem (4px) as the base unit:
 - Underline on hover for interaction feedback
 - Distinct color that meets WCAG AA contrast (4.5:1)
 
+Baseline rules:
+- Use link tokens (`--color-link`, `--color-link-hover`, `--color-link-visited`)
+- Underline appears on hover with `--link-underline-thickness`
+
 ### Code Blocks
 - Monospace font with consistent spacing
 - Subtle background to distinguish from content
 - Border for clear boundaries
 - Syntax highlighting with high contrast themes
 
+Baseline rules:
+- Inline `code` uses `--inline-code-padding-x` / `--inline-code-padding-y`
+- Block `pre` uses `--code-block-padding` and `--border-width-2`
+
 ### Lists
 - Clear indentation with consistent spacing
 - Bullets/numbers in tertiary color
 - Adequate line height for multi-line items
+
+### Blockquotes
+
+Baseline rules:
+- Left border width uses `--blockquote-border-width`
+- Vertical margins use `--blockquote-margin-y`
+- Left padding uses `--blockquote-padding-left`
+
+### Horizontal Rules
+
+Baseline rules:
+- Thickness uses `--hr-thickness`
+- Vertical margins use `--hr-margin-y`
 
 ## Layout Principles
 

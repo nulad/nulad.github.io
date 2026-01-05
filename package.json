@@ -6,12 +6,12 @@
     "node": ">=20.19.6"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "preserve": "node scripts/preserve-projects.js",
+    "dev": "npm --prefix nextjs-app run dev",
+    "build": "npm --prefix nextjs-app run build",
+    "preserve": "OUT_DIR=nextjs-app/out node scripts/preserve-projects.js",
     "build:export": "npm run build && npm run preserve",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "npm --prefix nextjs-app run start",
+    "lint": "npm --prefix nextjs-app run lint"
   },
   "dependencies": {
     "flexsearch": "^0.8.212",
