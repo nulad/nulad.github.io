@@ -18,6 +18,10 @@ export default function MarkdownContent({ content, className = '' }) {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
 
+  const taskListStates = Array.from(trimmed.matchAll(/^\s*[-*+]\s+\[(x| )\]\s+/gmi)).map(
+    (m) => m[1].toLowerCase() === 'x'
+  );
+
   // Convert markdown to HTML
   const html = renderMarkdown(trimmed);
 
@@ -84,14 +88,15 @@ export default function MarkdownContent({ content, className = '' }) {
     if (containerRef.current) {
       const checkboxes = containerRef.current.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach((input) => {
-        if (input.getAttribute('data-checked') === 'true' || input.hasAttribute('checked')) {
-          input.checked = true;
+        const index = Array.prototype.indexOf.call(checkboxes, input);
+        if (Number.isInteger(index) && index >= 0 && index < taskListStates.length) {
+          input.checked = taskListStates[index];
         }
 
         input.disabled = true;
       });
     }
-  }, [sanitizedHtml]);
+  }, [sanitizedHtml, taskListStates]);
 
   return (
     <div 
