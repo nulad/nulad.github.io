@@ -21,8 +21,24 @@ export default function MarkdownContent({ content, className = '' }) {
   // Convert markdown to HTML
   const html = renderMarkdown(trimmed);
 
+  const htmlWithCheckboxState = html.replace(
+    /<input([^>]*?)type=("|')checkbox\2([^>]*?)>/gi,
+    (match) => {
+      const hasChecked = /\schecked(\s|=|>)/i.test(match);
+      if (!hasChecked) {
+        return match;
+      }
+
+      if (/\sdata-checked(\s|=|>)/i.test(match)) {
+        return match;
+      }
+
+      return match.replace(/>\s*$/i, ' data-checked="true">');
+    }
+  );
+
   // Sanitize HTML to prevent XSS attacks
-  const sanitizedHtml = DOMPurify.sanitize(html, {
+  const sanitizedHtml = DOMPurify.sanitize(htmlWithCheckboxState, {
     ALLOWED_TAGS: [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'p', 'br', 'strong', 'em', 'del', 'ins',
@@ -36,7 +52,8 @@ export default function MarkdownContent({ content, className = '' }) {
     ],
     ALLOWED_ATTR: [
       'href', 'src', 'alt', 'title', 'class',
-      'disabled', 'checked', 'type', 'value'
+      'disabled', 'checked', 'type', 'value',
+      'data-checked'
     ],
     KEEP_CONTENT: true,
     RETURN_DOM: false,
@@ -63,16 +80,13 @@ export default function MarkdownContent({ content, className = '' }) {
   // Fix task list checkboxes after render
   useEffect(() => {
     if (containerRef.current) {
-      const taskListItems = containerRef.current.querySelectorAll('li.task-list-item');
-      taskListItems.forEach((li) => {
-        const input = li.querySelector('input[type="checkbox"]');
-        if (input && li.classList.contains('task-list-item')) {
-          // The checked attribute should be preserved by DOMPurify now
-          // But we'll ensure it's properly set based on the original HTML
-          if (li.innerHTML.includes('checked=""') || li.innerHTML.includes('checked="checked"')) {
-            input.checked = true;
-          }
+      const checkboxes = containerRef.current.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach((input) => {
+        if (input.getAttribute('data-checked') === 'true') {
+          input.checked = true;
         }
+
+        input.disabled = true;
       });
     }
   }, [sanitizedHtml]);
