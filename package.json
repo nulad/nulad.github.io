@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "preserve": "node scripts/preserve-projects.js",
+    "build:export": "npm run build && npm run preserve",
     "start": "next start",
     "lint": "next lint"
   },
