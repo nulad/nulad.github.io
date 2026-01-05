@@ -2,7 +2,11 @@
 
 import React from 'react';
 import { renderMarkdown } from '../lib/markdown';
-import DOMPurify from 'dompurify';
+
+let DOMPurify;
+if (typeof window !== 'undefined') {
+  DOMPurify = require('dompurify');
+}
 
 export default function MarkdownContent({ content, className = '' }) {
   if (!content || typeof content !== 'string') {
@@ -18,29 +22,34 @@ export default function MarkdownContent({ content, className = '' }) {
   // Convert markdown to HTML
   const html = renderMarkdown(trimmed);
 
-  // Sanitize HTML to prevent XSS attacks
-  const sanitizedHtml = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'br', 'strong', 'em', 'del', 'ins',
-      'ul', 'ol', 'li',
-      'a', 'img',
-      'blockquote', 'hr',
-      'table', 'thead', 'tbody', 'tr', 'th', 'td',
-      'pre', 'code',
-      'div', 'span',
-      'input'  // For task list checkboxes
-    ],
-    ALLOWED_ATTR: [
-      'href', 'src', 'alt', 'title', 'class',
-      'disabled', 'checked', 'type'
-    ],
-    KEEP_CONTENT: true,
-    RETURN_DOM: false,
-    RETURN_DOM_FRAGMENT: false,
-    ALLOWED_URI_REGEXP: /^(?:(?:(?:https?|ftp):)?\/\/|mailto:|tel:|callto:|sms:|#|\/)/i,
-    FORBID_ATTR: ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur']
-  });
+  // For server-side rendering (static export), use HTML directly
+  // For client-side, sanitize with DOMPurify
+  let sanitizedHtml = html;
+  
+  if (typeof window !== 'undefined' && DOMPurify) {
+    sanitizedHtml = DOMPurify.sanitize(html, {
+      ALLOWED_TAGS: [
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'p', 'br', 'strong', 'em', 'del', 'ins',
+        'ul', 'ol', 'li',
+        'a', 'img',
+        'blockquote', 'hr',
+        'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        'pre', 'code',
+        'div', 'span',
+        'input'  // For task list checkboxes
+      ],
+      ALLOWED_ATTR: [
+        'href', 'src', 'alt', 'title', 'class',
+        'disabled', 'checked', 'type'
+      ],
+      KEEP_CONTENT: true,
+      RETURN_DOM: false,
+      RETURN_DOM_FRAGMENT: false,
+      ALLOWED_URI_REGEXP: /^(?:(?:(?:https?|ftp):)?\/\/|mailto:|tel:|callto:|sms:|#|\/)/i,
+      FORBID_ATTR: ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur']
+    });
+  }
 
   // If no meaningful content after sanitization, return empty div
   if (!sanitizedHtml || sanitizedHtml.trim() === '') {
