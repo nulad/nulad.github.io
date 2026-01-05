@@ -12,6 +12,8 @@ const customJestConfig = {
     // Handle module aliases (this will be automatically configured for you based on your tsconfig.json paths)
     '^@/(.*)$': '<rootDir>/$1',
   },
+  testMatch: ['<rootDir>/__tests__/**/*.test.js'],
+  testPathIgnorePatterns: ['<rootDir>/spec/'],
   testEnvironment: 'jest-environment-jsdom',
 }
 
