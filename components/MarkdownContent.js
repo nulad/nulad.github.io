@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { renderMarkdown } from '../lib/markdown';
 import DOMPurify from 'dompurify';
 
 export default function MarkdownContent({ content, className = '' }) {
+  const containerRef = useRef(null);
+
+  // Handle empty or whitespace-only content
   if (!content || typeof content !== 'string') {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
@@ -33,7 +36,7 @@ export default function MarkdownContent({ content, className = '' }) {
     ],
     ALLOWED_ATTR: [
       'href', 'src', 'alt', 'title', 'class',
-      'disabled', 'checked', 'type'
+      'disabled', 'checked', 'type', 'value'
     ],
     KEEP_CONTENT: true,
     RETURN_DOM: false,
@@ -57,8 +60,26 @@ export default function MarkdownContent({ content, className = '' }) {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
 
+  // Fix task list checkboxes after render
+  useEffect(() => {
+    if (containerRef.current) {
+      const taskListItems = containerRef.current.querySelectorAll('li.task-list-item');
+      taskListItems.forEach((li) => {
+        const input = li.querySelector('input[type="checkbox"]');
+        if (input && li.classList.contains('task-list-item')) {
+          // The checked attribute should be preserved by DOMPurify now
+          // But we'll ensure it's properly set based on the original HTML
+          if (li.innerHTML.includes('checked=""') || li.innerHTML.includes('checked="checked"')) {
+            input.checked = true;
+          }
+        }
+      });
+    }
+  }, [sanitizedHtml]);
+
   return (
     <div 
+      ref={containerRef}
       className={`prose prose-lg max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />

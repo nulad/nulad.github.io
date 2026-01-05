@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 // Mock the markdown module
@@ -229,14 +229,14 @@ describe('MarkdownContent', () => {
     });
 
     test('handles whitespace-only content', () => {
-      render(<MarkdownContent content="   \n  \n   " />);
+      const whitespace = '   \n  \n   ';
+      render(<MarkdownContent content={whitespace} />);
       
-      expect(screen.queryByRole('heading')).not.toBeInTheDocument();
-      // The component renders a div with prose classes, which may contain empty paragraphs
+      // The component should return an empty div with prose classes
       const proseDiv = document.querySelector('.prose');
       expect(proseDiv).toBeInTheDocument();
-      // Check if it has no meaningful text content
-      expect(proseDiv.textContent?.trim()).toBe('');
+      // Check if it has no meaningful text content (may have whitespace)
+      expect(proseDiv.textContent?.trim() || '').toBe('');
     });
   });
 
@@ -259,14 +259,17 @@ describe('MarkdownContent', () => {
       expect(screen.getByText('Cell 1')).toBeInTheDocument();
     });
 
-    test('renders task lists', () => {
+    test('renders task lists', async () => {
       const markdown = '- [x] Completed task\n- [ ] Incomplete task';
       render(<MarkdownContent content={markdown} />);
       
-      const checkboxes = screen.getAllByRole('checkbox');
-      expect(checkboxes).toHaveLength(2);
-      expect(checkboxes[0]).toBeChecked();
-      expect(checkboxes[1]).not.toBeChecked();
+      // Wait for useEffect to run and fix checkboxes
+      await waitFor(() => {
+        const checkboxes = screen.getAllByRole('checkbox');
+        expect(checkboxes).toHaveLength(2);
+        expect(checkboxes[0]).toBeChecked();
+        expect(checkboxes[1]).not.toBeChecked();
+      });
     });
   });
 

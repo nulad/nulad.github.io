@@ -1,3 +1,173 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Brutalist Design System */
+
+@layer base {
+  * {
+    transition: none !important;
+  }
+
+  html {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  }
+
+  body {
+    @apply bg-white text-black;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    border: 3px solid black;
+    padding: 0.5em;
+    background: white;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    border-width: 4px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  /* Links */
+  a {
+    @apply text-black underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+
+  a:hover {
+    @apply bg-black text-white;
+    outline: 2px solid black;
+  }
+
+  /* Lists */
+  ul, ol {
+    margin-left: 2em;
+    margin-bottom: 1em;
+  }
+
+  ul {
+    list-style-type: square;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+  }
+
+  /* Code blocks */
+  code {
+    @apply bg-white text-black;
+    border: 2px solid black;
+    padding: 0.2em 0.4em;
+    font-size: 0.9em;
+    font-family: inherit;
+  }
+
+  pre {
+    @apply bg-white text-black;
+    border: 3px solid black;
+    padding: 1em;
+    margin-bottom: 1em;
+    overflow-x: auto;
+  }
+
+  pre code {
+    border: none;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 5px solid black;
+    padding-left: 1em;
+    margin: 1em 0;
+    font-style: normal;
+  }
+
+  /* Horizontal rules */
+  hr {
+    border: none;
+    border-top: 3px solid black;
+    margin: 2em 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border: 3px solid black;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+  }
+
+  th, td {
+    border: 2px solid black;
+    padding: 0.5em;
+    text-align: left;
+  }
+
+  th {
+    font-weight: 700;
+    background: black;
+    color: white;
+  }
+
+  /* Form elements */
+  input, textarea, select, button {
+    @apply bg-white text-black;
+    border: 3px solid black;
+    padding: 0.5em;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  button, input[type="submit"], input[type="button"] {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    @apply bg-black text-white;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    outline: 3px solid black;
+    outline-offset: 2px;
+  }
+}
