@@ -1,3 +1,152 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Brutalist Typography & Markdown Styles */
+.prose {
+  @apply text-gray-900 max-w-none;
+}
+
+/* Headings - Brutalist and bold */
+.prose h1 {
+  @apply text-4xl md:text-5xl font-black text-black mb-6 mt-8 pb-2 border-b-4 border-black;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.prose h2 {
+  @apply text-3xl md:text-4xl font-black text-black mb-4 mt-6;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.prose h3 {
+  @apply text-2xl md:text-3xl font-bold text-black mb-3 mt-5;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.prose h4 {
+  @apply text-xl md:text-2xl font-bold text-black mb-2 mt-4;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Paragraphs */
+.prose p {
+  @apply text-lg leading-relaxed mb-4;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Links - Brutalist underline style */
+.prose a {
+  @apply text-black font-semibold underline decoration-4 decoration-black underline-offset-2 hover:bg-black hover:text-white transition-colors duration-200;
+}
+
+/* Lists */
+.prose ul {
+  @apply list-none mb-4 space-y-2;
+}
+
+.prose ul li {
+  @apply text-lg relative pl-8 before:absolute before:left-0 before:top-2 before:w-4 before:h-4 before:bg-black before:transform before:rotate-45;
+}
+
+.prose ol {
+  @apply list-decimal mb-4 space-y-2 pl-8;
+}
+
+.prose ol li {
+  @apply text-lg font-medium;
+}
+
+.prose li {
+  @apply leading-relaxed;
+}
+
+.prose li > strong {
+  @apply font-black;
+}
+
+/* Code blocks - Brutalist style with borders */
+.prose pre {
+  @apply bg-black text-white p-4 md:p-6 mb-4 border-4 border-black overflow-x-auto;
+  font-family: 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.714;
+}
+
+.prose pre code {
+  @apply bg-transparent text-white p-0;
+  font-family: inherit;
+}
+
+/* Inline code */
+.prose code:not(pre code) {
+  @apply bg-gray-200 text-black px-2 py-1 font-mono text-sm border-2 border-black;
+  font-family: 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  @apply border-l-8 border-black bg-gray-100 pl-6 py-4 my-6 font-semibold text-lg italic;
+}
+
+/* Tables */
+.prose table {
+  @apply w-full mb-4 border-4 border-black;
+}
+
+.prose thead {
+  @apply bg-black text-white;
+}
+
+.prose th {
+  @apply p-3 text-left font-black text-lg;
+}
+
+.prose td {
+  @apply p-3 border-t-4 border-black text-lg;
+}
+
+/* Horizontal rule */
+.prose hr {
+  @apply border-0 border-b-4 border-black my-8;
+}
+
+/* Images */
+.prose img {
+  @apply w-full border-4 border-black mb-4;
+}
+
+/* Strong/Bold text */
+.prose strong {
+  @apply font-black text-black;
+}
+
+/* Italic text */
+.prose em {
+  @apply italic;
+}
+
+/* Strikethrough */
+.prose del {
+  @apply line-through decoration-4 decoration-black;
+}
+
+/* Task lists */
+.prose .task-list-item {
+  @apply list-none;
+}
+
+.prose .task-list-item input {
+  @apply w-5 h-5 border-2 border-black mr-3;
+}
+
+/* GitHub Flavored Markdown specific */
+.prose .contains-task-list {
+  @apply pl-0;
+}
+
+.prose .contains-task-list li {
+  @apply pl-0 before:content-none;
+}

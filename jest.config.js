@@ -13,6 +13,9 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
+  transformIgnorePatterns: [
+    'node_modules/(?!(remark|remark-gfm|remark-html|unified|bail|is-plain-obj|trough|vfile|unist-builder|unist-util-stringify-position|unist-util-generated|unist-util-position|unist-util-is|unist-util-visit-parents|unist-util-visit|mdast-util-mdx-jsx|mdast-util-mdxjs-esm|mdast-util-to-markdown|mdast-util-to-hast|hast-util-whitespace|hast-util-to-html|hast-to-hyperscript)/)',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
