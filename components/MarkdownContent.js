@@ -35,6 +35,9 @@ export default function MarkdownContent({ content, className = '' }) {
       'href', 'src', 'alt', 'title', 'class',
       'disabled', 'checked', 'type'
     ],
+    KEEP_CONTENT: true,
+    RETURN_DOM: false,
+    RETURN_DOM_FRAGMENT: false,
     ALLOWED_URI_REGEXP: /^(?:(?:(?:https?|ftp):)?\/\/|mailto:|tel:|callto:|sms:|#|\/)/i,
     FORBID_ATTR: ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur']
   });
@@ -44,14 +47,14 @@ export default function MarkdownContent({ content, className = '' }) {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
 
-  // Check if HTML contains only whitespace (even within tags)
-  // Allow img, hr, and br tags as they are self-closing and have no text content
+  // Check if HTML contains only whitespace/empty paragraphs
+  // First, strip out all HTML tags and check if there's meaningful text
   const hasMedia = /<(img|hr|br|input|table)/i.test(sanitizedHtml);
-  if (!hasMedia) {
-    const textOnly = sanitizedHtml.replace(/<[^>]*>/g, '');
-    if (!textOnly || textOnly.trim().length === 0) {
-      return <div className={`prose prose-lg max-w-none ${className}`} />;
-    }
+  const textOnly = sanitizedHtml.replace(/<[^>]*>/g, '');
+
+  // If no media elements and no text content (or only whitespace), return empty div
+  if (!hasMedia && (!textOnly || textOnly.trim().length === 0)) {
+    return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
 
   return (
