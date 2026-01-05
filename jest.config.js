@@ -14,7 +14,7 @@ const customJestConfig = {
   },
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [
-    'node_modules/(?!(remark.*|remark-html|remark-gfm|unified|mdast-util-.*|micromark.*|bail|is-plain-obj|trough|vfile|unist-.*|hast-.*|web-namespaces|html-void-elements|property-information|space-separated-tokens|comma-separated-tokens|parse-entities|character-entities|character-entities-legacy|character-reference-invalid|is-alphabetical|is-alphanumerical|is-decimal|is-hexadecimal|is-whitespace-character|longest-streak|markdown-entities|decode-named-character-reference|trim-lines|collapse-white-space)/)'
+    'node_modules/(?!(remark.*|remark-html|remark-gfm|unified|mdast-util-.*|micromark.*|bail|is-plain-obj|trough|vfile|unist-.*|hast-.*|web-namespaces|html-void-elements|property-information|space-separated-tokens|comma-separated-tokens|parse-entities|character-entities|character-entities-legacy|character-reference-invalid|is-alphabetical|is-alphanumerical|is-decimal|is-hexadecimal|is-whitespace-character|longest-streak|markdown-entities|decode-named-character-reference|trim-lines|collapse-white-space|dompurify|vfile-message)/)'
   ],
 }
 

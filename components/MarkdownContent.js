@@ -18,6 +18,11 @@ export default function MarkdownContent({ content, className = '' }) {
   // Convert markdown to HTML
   const html = renderMarkdown(trimmed);
 
+  // If no meaningful content after processing, return empty div
+  if (!html || html.trim() === '') {
+    return <div className={`prose prose-lg max-w-none ${className}`} />;
+  }
+
   // Sanitize HTML to prevent XSS attacks
   const sanitizedHtml = DOMPurify.sanitize(html, {
     ALLOWED_TAGS: [
@@ -51,9 +56,12 @@ export default function MarkdownContent({ content, className = '' }) {
   // First, strip out all HTML tags and check if there's meaningful text
   const hasMedia = /<(img|hr|br|input|table)/i.test(sanitizedHtml);
   const textOnly = sanitizedHtml.replace(/<[^>]*>/g, '');
+  
+  // Also normalize newlines and spaces to handle cases like "\n  \n"
+  const normalizedText = textOnly.replace(/\s+/g, ' ').trim();
 
   // If no media elements and no text content (or only whitespace), return empty div
-  if (!hasMedia && (!textOnly || textOnly.trim().length === 0)) {
+  if (!hasMedia && (!normalizedText || normalizedText.length === 0)) {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
   }
 
