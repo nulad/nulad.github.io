@@ -1,25 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "nulad",
-  description: "Personal website and blog of nulad",
-};
-
-export default function RootLayout({ children }) {
+export default function MarkdownDemoLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <title>Markdown Renderer Demo</title>
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
@@ -31,9 +14,7 @@ export default function RootLayout({ children }) {
           media="(prefers-color-scheme: dark)"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         {children}
       </body>
     </html>
