@@ -39,9 +39,19 @@ export default function MarkdownContent({ content, className = '' }) {
     FORBID_ATTR: ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur']
   });
 
-  // If no content after sanitization, return empty div
+  // If no meaningful content after sanitization, return empty div
   if (!sanitizedHtml || sanitizedHtml.trim() === '') {
     return <div className={`prose prose-lg max-w-none ${className}`} />;
+  }
+
+  // Check if HTML contains only whitespace (even within tags)
+  // Allow img, hr, and br tags as they are self-closing and have no text content
+  const hasMedia = /<(img|hr|br|input|table)/i.test(sanitizedHtml);
+  if (!hasMedia) {
+    const textOnly = sanitizedHtml.replace(/<[^>]*>/g, '');
+    if (!textOnly || textOnly.trim().length === 0) {
+      return <div className={`prose prose-lg max-w-none ${className}`} />;
+    }
   }
 
   return (
