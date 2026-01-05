@@ -361,6 +361,8 @@ projectsToPreserve.forEach(project => {
 
 **Integration:** Run after `next build && next export`
 
+**Strategy doc:** `docs/PRESERVE_EXISTING_PROJECT_FOLDERS_STRATEGY.md`
+
 ---
 
 ## GitHub Actions Workflow
