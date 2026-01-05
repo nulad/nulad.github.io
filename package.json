@@ -1,0 +1,37 @@
+{
+  "name": "nulad.github.io",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.19.6"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "flexsearch": "^0.8.212",
+    "gray-matter": "^4.0.3",
+    "next": "^15.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
+    "shiki": "^3.20.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^15.0.0"
+  },
+  "comments": {
+    "gray-matter": "Parse frontmatter from markdown files",
+    "remark": "Markdown processor with plugin ecosystem",
+    "remark-html": "Convert markdown to HTML",
+    "rehype-stringify": "HTML stringifier for rehype",
+    "shiki": "Syntax highlighting with VS Code themes",
+    "flexsearch": "Client-side search library"
+  }
+}
