@@ -55,6 +55,8 @@ export default function MarkdownContent({ content, className = '' }) {
       'disabled', 'checked', 'type', 'value',
       'data-checked'
     ],
+    ADD_ATTR: ['checked', 'data-checked'],
+    ALLOW_DATA_ATTR: true,
     KEEP_CONTENT: true,
     RETURN_DOM: false,
     RETURN_DOM_FRAGMENT: false,
@@ -82,7 +84,7 @@ export default function MarkdownContent({ content, className = '' }) {
     if (containerRef.current) {
       const checkboxes = containerRef.current.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach((input) => {
-        if (input.getAttribute('data-checked') === 'true') {
+        if (input.getAttribute('data-checked') === 'true' || input.hasAttribute('checked')) {
           input.checked = true;
         }
 
