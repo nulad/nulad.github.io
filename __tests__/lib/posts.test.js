@@ -67,8 +67,8 @@ describe('posts utility', () => {
       const post = getPostBySlug('hello-world');
 
       expect(post.title).toBe('Hello World');
-      expect(post.date).toBe('2024-01-01');
-      expect(post.description).toBe('My first blog post');
+      expect(post.date).toBe('2026-01-01');
+      expect(post.description).toBe('Welcome to my new blog - a space for thoughts on code and design');
       expect(Array.isArray(post.tags)).toBe(true);
     });
 
@@ -112,10 +112,11 @@ describe('posts utility', () => {
     it('should return the most recent post first', () => {
       const posts = getSortedPosts();
 
+      // building-a-static-blog-with-nextjs.md has date 2026-01-06
+      // hello-world.md has date 2026-01-01
       // test-markdown-features.md has date 2024-01-15
-      // hello-world.md has date 2024-01-01
-      expect(posts[0].slug).toBe('test-markdown-features');
-      expect(posts[0].date).toBe('2024-01-15');
+      expect(posts[0].slug).toBe('building-a-static-blog-with-nextjs');
+      expect(posts[0].date).toBe('2026-01-06');
     });
 
     it('should include all required fields', () => {

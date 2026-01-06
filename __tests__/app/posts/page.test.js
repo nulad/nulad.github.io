@@ -2,11 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PostPage from '../../../app/posts/[slug]/page.js';
-import { notFound } from 'next/navigation';
 
 // Mock the next/navigation module
 jest.mock('next/navigation', () => ({
-  notFound: jest.fn(),
+  notFound: jest.fn(() => {
+    // In Next.js, notFound() throws a special error that stops execution
+    // For testing, we'll throw a regular error to simulate this behavior
+    throw new Error('NEXT_NOT_FOUND');
+  }),
 }));
 
 // Mock the posts utility
@@ -30,6 +33,7 @@ jest.mock('../../../components/MarkdownContent', () => {
 });
 
 import { getPostBySlug, getAllPosts } from '../../../lib/posts';
+import { notFound } from 'next/navigation';
 
 describe('Post Page', () => {
   const mockPost = {
@@ -43,7 +47,9 @@ describe('Post Page', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    notFound.mockClear();
+    getPostBySlug.mockClear();
+    getAllPosts.mockClear();
   });
 
   describe('when post exists', () => {
@@ -122,31 +128,35 @@ describe('Post Page', () => {
 
   describe('when post does not exist', () => {
     test('calls notFound when post is null', async () => {
+      // Reset mock calls but keep implementation
+      notFound.mockClear();
+      getPostBySlug.mockClear();
+      
       getPostBySlug.mockReturnValue(null);
-      notFound.mockImplementation(() => {
-        throw new Error('NOT_FOUND');
-      });
       
       const params = { slug: 'non-existent-post' };
       
+      // Call the component function directly and expect it to throw
       expect(() => {
-        render(<PostPage params={params} />);
-      }).toThrow('NOT_FOUND');
+        PostPage({ params });
+      }).toThrow('NEXT_NOT_FOUND');
       
       expect(notFound).toHaveBeenCalled();
     });
 
     test('calls notFound when post is undefined', async () => {
+      // Reset mock calls but keep implementation
+      notFound.mockClear();
+      getPostBySlug.mockClear();
+      
       getPostBySlug.mockReturnValue(undefined);
-      notFound.mockImplementation(() => {
-        throw new Error('NOT_FOUND');
-      });
       
       const params = { slug: 'non-existent-post' };
       
+      // Call the component function directly and expect it to throw
       expect(() => {
-        render(<PostPage params={params} />);
-      }).toThrow('NOT_FOUND');
+        PostPage({ params });
+      }).toThrow('NEXT_NOT_FOUND');
       
       expect(notFound).toHaveBeenCalled();
     });
