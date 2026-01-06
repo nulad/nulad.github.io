@@ -12,25 +12,18 @@ if (typeof window !== 'undefined') {
 export default function MarkdownContent({ content, className = '' }) {
   const containerRef = useRef(null);
 
-  // Handle empty or whitespace-only content
-  if (!content || typeof content !== 'string') {
-    return <div className={`prose prose-lg max-w-none ${className}`} />;
-  }
-
   // Trim whitespace to handle edge cases
-  const trimmed = content.trim();
-  if (trimmed.length === 0) {
-    return <div className={`prose prose-lg max-w-none ${className}`} />;
-  }
+  const trimmed = (content && typeof content === 'string') ? content.trim() : '';
 
-  const taskListStates = useMemo(() =>
-    Array.from(trimmed.matchAll(/^\s*[-*+]\s+\[(x| )\]\s+/gmi)).map(
+  const taskListStates = useMemo(() => {
+    if (!trimmed) return [];
+    return Array.from(trimmed.matchAll(/^\s*[-*+]\s+\[(x| )\]\s+/gmi)).map(
       (m) => m[1].toLowerCase() === 'x'
-    ),
-    [trimmed]
-  );
+    );
+  }, [trimmed]);
 
   const sanitizedHtml = useMemo(() => {
+    if (!trimmed) return '';
     // Convert markdown to HTML
     const html = renderMarkdown(trimmed);
 
