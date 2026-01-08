@@ -6,8 +6,8 @@ export default function Projects() {
       <h1>Projects</h1>
       
       <div className="mb-8">
-        <Link 
-          href="/resume.pdf" 
+        <Link
+          href="https://nulad.github.io/resume"
           className="inline-block bg-black text-white border-4 border-black px-6 py-3 font-bold"
           target="_blank"
           rel="noopener noreferrer"

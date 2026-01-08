@@ -4,7 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal blog built with Next.js 14 (App Router) that generates a static site deployed to GitHub Pages. The site reads Markdown files from `content/posts/` and renders them as blog posts with features like infinite scroll, reading time estimation, and a custom markdown renderer.
+This is a personal blog and portfolio built with Next.js 14 (App Router) that generates a static site deployed to GitHub Pages. The site reads Markdown files from `content/posts/` and renders them as blog posts with features like infinite scroll, reading time estimation, and a custom markdown renderer. The site uses Tailwind CSS for styling with a brutalist aesthetic.
+
+## Issue Tracking
+
+This project uses **bd** (beads) for issue tracking:
+- Run `bd ready` to find available work
+- Run `bd show <id>` to view issue details
+- See [AGENTS.md](AGENTS.md) for complete workflow guidance
 
 ## Development Commands
 
@@ -63,11 +70,12 @@ The project uses a **custom markdown renderer** ([lib/markdown.js](lib/markdown.
 
 ### Static Site Generation
 
-- Next.js configured with `output: 'export'` for static site generation ([next.config.js](next.config.js))
+- Next.js configured for static site generation ([next.config.js](next.config.js))
 - Uses App Router with `generateStaticParams()` to pre-render all post pages
-- Dynamic route: `app/posts/[slug]/page.js` handles individual post pages
+- Dynamic route: [app/posts/[slug]/page.js](app/posts/[slug]/page.js) handles individual post pages
 - Images are set to `unoptimized: true` for GitHub Pages compatibility
 - Trailing slashes enabled for better static hosting compatibility
+- `transpilePackages` configured for remark dependencies (though custom renderer is used)
 
 ### Infinite Scroll Implementation
 
@@ -88,17 +96,19 @@ The homepage uses a custom infinite scroll component ([components/InfiniteScroll
 
 ```
 app/
-  ├── layout.js          # Root layout (minimal, imports globals.css)
+  ├── layout.js          # Root layout with Header component
   ├── page.js            # Homepage with infinite scroll post list
-  └── posts/[slug]/
-      └── page.js        # Dynamic post page with generateStaticParams
+  ├── posts/[slug]/
+  │   └── page.js        # Dynamic post page with generateStaticParams
+  └── projects/
+      └── page.js        # Static projects page with portfolio items
 
 components/
   ├── InfiniteScroll.js  # Reusable infinite scroll using IntersectionObserver
   ├── PostsList.js       # Post list with client-side pagination
   ├── PostCard.js        # Individual post preview card
   ├── MarkdownContent.js # Markdown renderer with DOMPurify sanitization
-  └── Header.js          # Site header component
+  └── Header.js          # Site header with navigation
 
 lib/
   ├── posts.js           # Post data fetching (getAllPosts, getPostBySlug, getSortedPosts)
@@ -106,8 +116,10 @@ lib/
   └── utils.js           # Utilities (formatDate, calculateReadingTime)
 
 content/posts/          # Markdown blog posts
+public/                 # Static assets (resume.pdf, etc.)
 __tests__/              # Jest tests mirroring project structure
 spec/                   # Project specifications (excluded from tests)
+.beads/                 # Beads issue tracking data
 ```
 
 ## Key Conventions
@@ -140,4 +152,6 @@ spec/                   # Project specifications (excluded from tests)
 - The markdown renderer ([lib/markdown.js](lib/markdown.js)) is custom-built and should be modified carefully - it has specific parsing logic for various Markdown elements
 - DOMPurify sanitization happens only client-side; during SSR the markdown library's escaping is relied upon
 - The IntersectionObserver in [InfiniteScroll.js](components/InfiniteScroll.js) has a 200px rootMargin to improve UX by preloading content
-- GitHub Pages deployment requires the `trailingSlash: true` and `images.unoptimized: true` settings in next.config.js
+- GitHub Pages deployment requires the `trailingSlash: true` and `images.unoptimized: true` settings in [next.config.js](next.config.js)
+- The [projects page](app/projects/page.js) is static and links to archived projects at github.com/nulad/archive
+- Styling uses Tailwind CSS with a brutalist design approach (thick borders, monospace fonts, high contrast)
