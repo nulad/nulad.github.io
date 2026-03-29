@@ -1,19 +1,26 @@
-'use client';
+import { useEffect, useRef } from "react";
 
-import React, { useEffect, useRef } from 'react';
+interface InfiniteScrollProps<T> {
+  items: T[];
+  renderItem: (item: T, index: number) => React.ReactNode;
+  onLoadMore?: () => void;
+  loading?: boolean;
+  hasMore?: boolean;
+  loadingLabel?: string;
+}
 
-export default function InfiniteScroll({
+export default function InfiniteScroll<T extends { slug?: string }>({
   items,
   renderItem,
   onLoadMore,
   loading = false,
   hasMore = true,
-  loadingLabel = 'Loading...',
-}) {
-  const sentinelRef = useRef(null);
+  loadingLabel = "Loading...",
+}: InfiniteScrollProps<T>) {
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') {
+    if (typeof IntersectionObserver === "undefined") {
       return;
     }
 
@@ -33,7 +40,7 @@ export default function InfiniteScroll({
           onLoadMore?.();
         }
       },
-      { root: null, rootMargin: '200px', threshold: 0 }
+      { root: null, rootMargin: "200px", threshold: 0 }
     );
 
     observer.observe(el);

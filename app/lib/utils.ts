@@ -1,0 +1,13 @@
+export function formatDate(date: string | Date): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export function calculateReadingTime(text: string | null | undefined): number {
+  if (!text || text.trim().length === 0) return 0;
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}

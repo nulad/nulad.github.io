@@ -1,12 +1,18 @@
-'use client';
-
-import { useState } from 'react';
-import InfiniteScroll from './InfiniteScroll';
-import PostCard from './PostCard';
+import { useState } from "react";
+import InfiniteScroll from "./InfiniteScroll";
+import PostCard from "./PostCard";
 
 const POSTS_PER_PAGE = 5;
 
-export default function PostsList({ posts }) {
+interface Post {
+  title?: string;
+  date?: string;
+  description?: string;
+  readingTime?: string;
+  slug: string;
+}
+
+export default function PostsList({ posts }: { posts: Post[] }) {
   const [displayedCount, setDisplayedCount] = useState(POSTS_PER_PAGE);
   const [loading, setLoading] = useState(false);
 
@@ -18,9 +24,10 @@ export default function PostsList({ posts }) {
 
     setLoading(true);
 
-    // Simulate async loading
     setTimeout(() => {
-      setDisplayedCount(prev => Math.min(prev + POSTS_PER_PAGE, posts.length));
+      setDisplayedCount((prev) =>
+        Math.min(prev + POSTS_PER_PAGE, posts.length)
+      );
       setLoading(false);
     }, 300);
   };

@@ -1,7 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import InfiniteScroll from '@/components/InfiniteScroll';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import InfiniteScroll from "../../app/components/InfiniteScroll";
 
 function mockIntersectionObserver() {
   const observers = [];
@@ -21,7 +20,7 @@ function mockIntersectionObserver() {
     }
   }
 
-  Object.defineProperty(window, 'IntersectionObserver', {
+  Object.defineProperty(window, "IntersectionObserver", {
     writable: true,
     configurable: true,
     value: MockIntersectionObserver,
@@ -30,26 +29,26 @@ function mockIntersectionObserver() {
   return observers;
 }
 
-describe('InfiniteScroll', () => {
-  test('renders initial items', () => {
+describe("InfiniteScroll", () => {
+  test("renders initial items", () => {
     render(
       <InfiniteScroll
-        items={[{ slug: 'a' }, { slug: 'b' }]}
+        items={[{ slug: "a" }, { slug: "b" }]}
         renderItem={(item) => <div>{item.slug}</div>}
       />
     );
 
-    expect(screen.getByText('a')).toBeInTheDocument();
-    expect(screen.getByText('b')).toBeInTheDocument();
+    expect(screen.getByText("a")).toBeInTheDocument();
+    expect(screen.getByText("b")).toBeInTheDocument();
   });
 
-  test('calls onLoadMore when scrolling near bottom', () => {
+  test("calls onLoadMore when scrolling near bottom", () => {
     const observers = mockIntersectionObserver();
-    const onLoadMore = jest.fn();
+    const onLoadMore = vi.fn();
 
     render(
       <InfiniteScroll
-        items={[{ slug: 'a' }]}
+        items={[{ slug: "a" }]}
         renderItem={(item) => <div>{item.slug}</div>}
         onLoadMore={onLoadMore}
         hasMore={true}
@@ -62,32 +61,34 @@ describe('InfiniteScroll', () => {
     expect(onLoadMore).toHaveBeenCalledTimes(1);
   });
 
-  test('shows loading indicator when loading', () => {
+  test("shows loading indicator when loading", () => {
     render(
       <InfiniteScroll
-        items={[{ slug: 'a' }]}
+        items={[{ slug: "a" }]}
         renderItem={(item) => <div>{item.slug}</div>}
         loading={true}
         hasMore={true}
       />
     );
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
-  test('handles end of posts (no more loading)', () => {
-    const onLoadMore = jest.fn();
+  test("handles end of posts (no more loading)", () => {
+    const onLoadMore = vi.fn();
 
     render(
       <InfiniteScroll
-        items={[{ slug: 'a' }]}
+        items={[{ slug: "a" }]}
         renderItem={(item) => <div>{item.slug}</div>}
         onLoadMore={onLoadMore}
         hasMore={false}
       />
     );
 
-    expect(screen.getByLabelText('infinite-scroll-end')).toBeInTheDocument();
-    expect(screen.queryByLabelText('infinite-scroll-sentinel')).not.toBeInTheDocument();
+    expect(screen.getByLabelText("infinite-scroll-end")).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("infinite-scroll-sentinel")
+    ).not.toBeInTheDocument();
   });
 });

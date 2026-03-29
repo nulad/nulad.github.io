@@ -1,6 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --color-brutalist-black: #000000;
+  --color-brutalist-white: #ffffff;
+}
+
+/* Brutalist overrides — replaces corePlugins disabling */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
 
 /* Brutalist Design System */
 
@@ -10,7 +23,8 @@
   }
 
   html {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      Liberation Mono, Courier New, monospace;
   }
 
   body {
@@ -20,7 +34,12 @@
   }
 
   /* Typography */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 700;
     line-height: 1.2;
     margin-top: 1.5em;
@@ -72,7 +91,8 @@
   }
 
   /* Lists */
-  ul, ol {
+  ul,
+  ol {
     margin-left: 2em;
     margin-bottom: 1em;
   }
@@ -136,7 +156,8 @@
     margin-bottom: 1em;
   }
 
-  th, td {
+  th,
+  td {
     border: 2px solid black;
     padding: 0.5em;
     text-align: left;
@@ -149,7 +170,10 @@
   }
 
   /* Form elements */
-  input, textarea, select, button {
+  input,
+  textarea,
+  select,
+  button {
     @apply bg-white text-black;
     border: 3px solid black;
     padding: 0.5em;
@@ -157,16 +181,22 @@
     font-size: 1rem;
   }
 
-  button, input[type="submit"], input[type="button"] {
+  button,
+  input[type="submit"],
+  input[type="button"] {
     cursor: pointer;
     font-weight: 700;
   }
 
-  button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+  button:hover,
+  input[type="submit"]:hover,
+  input[type="button"]:hover {
     @apply bg-black text-white;
   }
 
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     outline: 3px solid black;
     outline-offset: 2px;
   }
