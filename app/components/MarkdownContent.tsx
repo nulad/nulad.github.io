@@ -19,7 +19,8 @@ export default function MarkdownContent({
   useEffect(() => {
     if (typeof window !== "undefined") {
       import("dompurify").then((mod) => {
-        setDomPurify(mod.default ?? mod);
+        const createDOMPurify = mod.default ?? mod;
+        setDomPurify(createDOMPurify(window));
       });
     }
   }, []);

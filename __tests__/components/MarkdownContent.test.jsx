@@ -98,8 +98,7 @@ const mockSanitize = vi.fn((html) => {
 });
 
 vi.mock("dompurify", () => ({
-  default: { sanitize: mockSanitize },
-  sanitize: mockSanitize,
+  default: () => ({ sanitize: mockSanitize }),
 }));
 
 import MarkdownContent from "../../app/components/MarkdownContent";
