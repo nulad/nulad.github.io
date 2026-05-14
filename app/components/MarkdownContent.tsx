@@ -1,10 +1,5 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { renderMarkdown } from "~/lib/markdown";
-
-let DOMPurify: typeof import("dompurify") | null = null;
-if (typeof window !== "undefined") {
-  DOMPurify = require("dompurify");
-}
 
 interface MarkdownContentProps {
   content?: string | null;
@@ -16,6 +11,18 @@ export default function MarkdownContent({
   className = "",
 }: MarkdownContentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [domPurify, setDomPurify] = useState<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("dompurify").then((mod) => {
+        setDomPurify(mod.default ?? mod);
+      });
+    }
+  }, []);
 
   const trimmed =
     content && typeof content === "string" ? content.trim() : "";
@@ -47,8 +54,8 @@ export default function MarkdownContent({
       }
     );
 
-    if (DOMPurify) {
-      return DOMPurify.sanitize(htmlWithCheckboxState, {
+    if (domPurify) {
+      return domPurify.sanitize(htmlWithCheckboxState, {
         ALLOWED_TAGS: [
           "h1",
           "h2",
@@ -112,7 +119,7 @@ export default function MarkdownContent({
     }
 
     return htmlWithCheckboxState;
-  }, [trimmed]);
+  }, [trimmed, domPurify]);
 
   useEffect(() => {
     if (containerRef.current) {

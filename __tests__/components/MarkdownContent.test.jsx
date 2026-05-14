@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 // Mock the markdown module
 vi.mock("../../app/lib/markdown", () => ({
@@ -216,22 +216,26 @@ describe("MarkdownContent", () => {
       expect(screen.getByText("Safe content")).toBeInTheDocument();
     });
 
-    test("removes dangerous event handlers", () => {
+    test("removes dangerous event handlers", async () => {
       const markdown = "<div onclick=\"alert('xss')\">Click me</div>";
       render(<MarkdownContent content={markdown} />);
 
-      const div = screen.getByText("Click me");
-      expect(div).toBeInTheDocument();
-      expect(div).not.toHaveAttribute("onclick");
+      await waitFor(() => {
+        const div = screen.getByText("Click me");
+        expect(div).toBeInTheDocument();
+        expect(div).not.toHaveAttribute("onclick");
+      });
     });
 
-    test("removes dangerous javascript: URLs", () => {
+    test("removes dangerous javascript: URLs", async () => {
       const markdown = "<a href=\"javascript:alert('xss')\">Link</a>";
       render(<MarkdownContent content={markdown} />);
 
-      const link = screen.getByText("Link");
-      expect(link).toBeInTheDocument();
-      expect(link).not.toHaveAttribute("href", "javascript:alert('xss')");
+      await waitFor(() => {
+        const link = screen.getByText("Link");
+        expect(link).toBeInTheDocument();
+        expect(link).not.toHaveAttribute("href", "javascript:alert('xss')");
+      });
     });
   });
 
