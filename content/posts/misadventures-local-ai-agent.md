@@ -7,6 +7,16 @@ tags: ["local-ai", "agentic-coding", "llm"]
 
 # My (mis)adventures of running local LLM for Agentic coding.
 
+## TLDR:
+
+After a series of mishap, here is the stack for running local agentic coding with RTX 4060:
+
+- Gemma E4B/Qwen 3.5 9B for the model.
+- llama.cpp compiled manually with CUDA flag on (-DGGML_CUDA=ON)
+- pi for the agentic harness
+
+If you want to find out how did I get this stack, follow along and read this story.
+
 ## Backstory
 
 It all started with a dream (and a GPU purchase I definitely made for productivity reasons, not games). I bought an RTX 4060 back in 2024, since my monitor was stuttering (see, definitely not for playing games :p). The Agentic Coding era was starting to kick in around that time, and like any other engineer, I got quite into it as well. I bought a subscription for Claude at the $20/month tier.
@@ -17,7 +27,7 @@ The grand plan: use a premium model (Opus) for planning and task breakdown, then
 
 The grand plan is there, and what's next is to build it. Two things needed to be built: a task management tool for AI agents, and a competent local LLM setup. The tool is a story for another day. What *this* story is how I researched, stumbled, backtracked, and got thoroughly lost in the world of local AI agents.
 
-## The Quest
+# The Quest
 
 The requirement was deceptively simple: get a local AI agentic coding setup running competently on my machine. To do this, I needed to make three decisions:
 
