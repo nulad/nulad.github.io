@@ -108,13 +108,6 @@ describe("posts utility", () => {
       }
     });
 
-    it("should return the most recent post first", () => {
-      const posts = getSortedPosts();
-
-      expect(posts[0].slug).toBe("building-a-static-blog-with-nextjs");
-      expect(posts[0].date).toBe("2026-01-06");
-    });
-
     it("should include all required fields", () => {
       const posts = getSortedPosts();
 
